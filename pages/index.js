@@ -26,7 +26,7 @@ export default function Home() {
     };
     connectWallet();
   }, []);
-  console.log(state);
+
   return (
     <div>
       <Donate state={state} />
