@@ -1,27 +1,26 @@
-import React from "react";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import { ethers } from "ethers";
+import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { ethers } from 'ethers'
 
 const Donate = ({ state }) => {
-  const { contract } = state;
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
+  const { contract } = state
+  const [name, setName] = useState('')
+  const [message, setMessage] = useState('')
 
   const handleChange = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const donationAmount = { value: ethers.utils.parseEther("0.0001") };
-      const transaction = await contract.donate(name, message, donationAmount);
-      setName("");
-      setMessage("");
-      toast.success("Transaction successful!");
+      const donationAmount = { value: ethers.utils.parseEther('0.0001') }
+      const transaction = await contract.donate(name, message, donationAmount)
+      setName('')
+      setMessage('')
+      toast.success('Transaction successful!')
     } catch (err) {
       toast.error(
-        "The owner cannot make a donation, Kindly change the wallet address"
-      );
+        'The owner cannot make a donation, Kindly change the wallet address'
+      )
     }
-  };
+  }
   return (
     <div>
       <input
@@ -38,7 +37,7 @@ const Donate = ({ state }) => {
       />
       <button onClick={handleChange}>Donate</button>
     </div>
-  );
-};
+  )
+}
 
-export default Donate;
+export default Donate

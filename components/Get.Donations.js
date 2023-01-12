@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 
 const GetDonations = ({ state }) => {
-  const { contract } = state;
-  const [donations, setDonations] = useState([]);
-
+  const { contract } = state
+  const [donations, setDonations] = useState([])
   useEffect(() => {
     const getDonations = async () => {
-      const donations = await contract.getDonations();
-      setDonations(donations);
-    };
-    contract && getDonations();
-  }, [contract]);
+      const donations = await contract.getDonations()
+      setDonations(donations)
+    }
+    contract && getDonations()
+  }, [contract])
   return (
     <div>
       {donations.map((donation, index) => (
@@ -21,7 +20,7 @@ const GetDonations = ({ state }) => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default GetDonations;
+export default GetDonations
