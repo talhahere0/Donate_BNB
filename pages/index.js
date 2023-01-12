@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import DonateEthABI from "../web3/abis/DonateEth.json";
+import DonateBnbABI from "../web3/abis/DonateBnb.json";
 import { SmartContract } from "../web3/addresses/contracts.ts";
 import Donate from "../components/Donate";
 
@@ -18,7 +18,7 @@ export default function Home() {
         const signer = provider.getSigner();
         const contract = new ethers.Contract(
           SmartContract,
-          DonateEthABI,
+          DonateBnbABI,
           signer
         );
         setState({ provider, signer, contract });

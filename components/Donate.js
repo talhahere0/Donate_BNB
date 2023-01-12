@@ -7,6 +7,8 @@ const Donate = ({ state }) => {
   const { contract } = state;
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
+  const getdonation = "";
+
   const handleChange = async (e) => {
     e.preventDefault();
     const donationAmount = { value: ethers.utils.parseEther("0.0001") };
