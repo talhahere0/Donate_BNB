@@ -1,4 +1,3 @@
-declare const React: any
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { ethers } from 'ethers'
