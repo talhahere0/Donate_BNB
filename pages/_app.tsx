@@ -1,4 +1,5 @@
-import { Toaster } from "react-hot-toast";
+import { Toaster } from 'react-hot-toast'
+import '../styles/globals.css'
 
 export default function App({ Component, pageProps }) {
   return (
@@ -10,8 +11,8 @@ export default function App({ Component, pageProps }) {
           // Define default options
           duration: 5000,
           style: {
-            background: "#363636",
-            color: "#fff",
+            background: '#363636',
+            color: '#fff',
           },
 
           // Default options for specific types
@@ -22,5 +23,5 @@ export default function App({ Component, pageProps }) {
       />
       <Component {...pageProps} />
     </>
-  );
+  )
 }

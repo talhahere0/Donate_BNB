@@ -35,7 +35,9 @@ const Donate = ({ state }) => {
         value={message}
         placeholder="Enter message"
       />
-      <button onClick={handleChange}>Donate</button>
+      <button className="text-red-600" onClick={handleChange}>
+        Donate
+      </button>
     </div>
   )
 }

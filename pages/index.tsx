@@ -4,6 +4,7 @@ import DonateBnbABI from '../web3/abis/DonateBnb.json'
 import { SmartContract } from '../web3/addresses/contracts'
 import Donate from '../components/Donate'
 import GetDonations from '../components/Get.Donations'
+import Header from '../components/Header'
 
 export default function Home() {
   const [state, setState] = useState({
@@ -30,8 +31,9 @@ export default function Home() {
 
   return (
     <div>
+      <Header />
       <Donate state={state} />
-      <GetDonations state={state} />
+      {/* <GetDonations state={state} /> */}
     </div>
   )
 }
