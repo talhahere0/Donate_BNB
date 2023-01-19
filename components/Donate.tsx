@@ -4,24 +4,26 @@ import { ethers } from 'ethers'
 import { ImSpinner7 } from 'react-icons/im'
 import { useForm } from 'react-hook-form'
 
+interface FormData {
+  fullName: string
+  message: string
+}
+
 const Donate = ({ state }) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    // electionName: '',
-  })
+  } = useForm<FormData>()
   const { contract } = state
-  const [name, setName] = useState('')
+  const [fullName, setName] = useState('')
   const [message, setMessage] = useState('')
 
-  const handleChange = async (e) => {
-    e.preventDefault()
+  const onSubmit = async (e) => {
     try {
       const donationAmount = { value: ethers.utils.parseEther('0.0001') }
-      const transaction = await contract.donate(name, message, donationAmount)
+      await contract.donate(fullName, message, donationAmount)
       setName('')
       setMessage('')
       toast.success('Transaction successful!')
@@ -33,24 +35,8 @@ const Donate = ({ state }) => {
   }
   return (
     <div className="bg-gray-100 h-[900px]">
-      {/* <input
-        onChange={(e) => setName(e.target.value)}
-        type="text"
-        value={name}
-        placeholder="Enter name"
-      />
-      <input
-        onChange={(e) => setMessage(e.target.value)}
-        type="text"
-        value={message}
-        placeholder="Enter message"
-      />
-      <button className="text-red-600" onClick={handleChange}>
-        Donate
-      </button> */}
-
       <form
-        // onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         className="bg-white max-w-xl mx-auto rounded-md p-4 sm:p-8 space-y-8 shadow-lg "
       >
         <h3 className="text-2xl font-semibold text-center">
@@ -58,50 +44,59 @@ const Donate = ({ state }) => {
         </h3>
         <div>
           <label
-            htmlFor="electionName"
+            htmlFor="fullName"
             className="block mb-2 text-gray-400 text-sm"
           >
             Full Name
           </label>
           <input
             type="text"
-            id="electionName"
-            // {...register('electionName', {
+            id="fullName"
+            onChange={(e) => setName(e.target.value)}
+            value={fullName}
+            // {...register('fullName', {
             //   required: {
             //     value: true,
-            //     message: 'Election Name is required',
+            //     message: 'Full Name is required',
             //   },
             // })}
             className={`block ring-2 ring-gray-300 focus:ring-brand-3 focus:outline-none rounded w-full p-2 ${
-              errors.electionName ? 'ring-red-400 focus:ring-red-400' : ''
+              errors.fullName ? 'ring-red-400 focus:ring-red-400' : ''
             }`}
           />
+          {errors.fullName?.type === 'required' && (
+            <p className="text-red-400 mt-2 font-light">
+              {errors.fullName.message}
+            </p>
+          )}
 
           <label
-            htmlFor="electionName"
+            htmlFor="message"
             className="block mt-4 mb-2 text-gray-400 text-sm"
           >
             Message
           </label>
           <input
             type="text"
-            id="electionName"
-            // {...register('electionName', {
+            id="message"
+            onChange={(e) => setMessage(e.target.value)}
+            value={message}
+            // {...register('message', {
             //   required: {
             //     value: true,
-            //     message: 'Election Name is required',
+            //     message: 'Message is required',
             //   },
             // })}
-            className={`block ring-2 ring-gray-300 focus:ring-brand-3 focus:outline-none rounded w-full h-[130px] p-2 ${
-              errors.electionName ? 'ring-red-400 focus:ring-red-400' : ''
+            className={`block ring-2 ring-gray-300 focus:ring-brand-3 focus:outline-none rounded w-full p-2 ${
+              errors.message ? 'ring-red-400 focus:ring-red-400' : ''
             }`}
           />
 
-          {/* {errors.electionName?.type === 'required' && (
+          {errors.message?.type === 'required' && (
             <p className="text-red-400 mt-2 font-light">
-              {errors.electionName.message}
+              {errors.message.message}
             </p>
-          )} */}
+          )}
         </div>
 
         <div className="text-right">
