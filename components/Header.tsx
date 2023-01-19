@@ -12,9 +12,9 @@ const Header = () => {
             </h1>
           </Link>
           <div className="grow">
-            <button className="ml-auto block text-sm sm:text-base bg-brand-3 bg-opacity-30 hover:bg-opacity-60 transition rounded-full px-4 md:px-6 py-2 md:py-3 cursor-pointer">
+            {/* <button className="ml-auto block text-sm sm:text-base bg-brand-3 bg-opacity-30 hover:bg-opacity-60 transition rounded-full px-4 md:px-6 py-2 md:py-3 cursor-pointer">
               Connect Wallet
-            </button>
+            </button> */}
           </div>
         </div>
       </header>
