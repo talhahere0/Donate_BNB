@@ -15,20 +15,30 @@ const Donate = ({ state }) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>()
+  } = useForm<FormData>({
+    values: {
+      fullName: '',
+      message: '',
+    },
+  })
   const { contract } = state
-  const [fullName, setName] = useState('')
-  const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (data) => {
     try {
+      setLoading(true)
       const donationAmount = { value: ethers.utils.parseEther('0.0001') }
-      await contract.donate(fullName, message, donationAmount)
-      setName('')
-      setMessage('')
+      const tx = await contract.donate(
+        data.fullName,
+        data.message,
+        donationAmount
+      )
+      await tx.wait()
+      setLoading(false)
       toast.success('Transaction successful!')
+      reset()
     } catch (err) {
-      toast.error(
+      console.log(
         'The owner cannot make a donation, Kindly change the wallet address'
       )
     }
@@ -39,7 +49,7 @@ const Donate = ({ state }) => {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white max-w-xl mx-auto rounded-md p-4 sm:p-8 space-y-8 shadow-lg "
       >
-        <h3 className="text-2xl font-semibold text-center">
+        <h3 className="text-2xl font-semibold text-center bg-[#FFB100] rounded-md py-1">
           Feel Free To Donate
         </h3>
         <div>
@@ -52,14 +62,12 @@ const Donate = ({ state }) => {
           <input
             type="text"
             id="fullName"
-            onChange={(e) => setName(e.target.value)}
-            value={fullName}
-            // {...register('fullName', {
-            //   required: {
-            //     value: true,
-            //     message: 'Full Name is required',
-            //   },
-            // })}
+            {...register('fullName', {
+              required: {
+                value: true,
+                message: 'Full Name is required',
+              },
+            })}
             className={`block ring-2 ring-gray-300 focus:ring-brand-3 focus:outline-none rounded w-full p-2 ${
               errors.fullName ? 'ring-red-400 focus:ring-red-400' : ''
             }`}
@@ -79,14 +87,12 @@ const Donate = ({ state }) => {
           <input
             type="text"
             id="message"
-            onChange={(e) => setMessage(e.target.value)}
-            value={message}
-            // {...register('message', {
-            //   required: {
-            //     value: true,
-            //     message: 'Message is required',
-            //   },
-            // })}
+            {...register('message', {
+              required: {
+                value: true,
+                message: 'Message is required',
+              },
+            })}
             className={`block ring-2 ring-gray-300 focus:ring-brand-3 focus:outline-none rounded w-full p-2 ${
               errors.message ? 'ring-red-400 focus:ring-red-400' : ''
             }`}
@@ -101,12 +107,14 @@ const Donate = ({ state }) => {
 
         <div className="text-right">
           <button
-            // ref={submitBtnRef}
             type="submit"
-            className="btn-primary inline-flex items-center group"
+            className="bg-[#FFB100] hover:bg-[#FBC252] px-5 rounded-md py-2 inline-flex items-center"
           >
-            <span className="block group-disabled:hidden">Pay</span>
-            <ImSpinner7 className="ml-2 animate-spin hidden group-disabled:block" />
+            {loading ? (
+              <ImSpinner7 className="animate-spin" />
+            ) : (
+              <span className="block">Pay</span>
+            )}
           </button>
         </div>
       </form>
