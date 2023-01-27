@@ -39,7 +39,8 @@ const Donate = ({ state }) => {
       reset()
     } catch (err) {
       console.log(
-        'The owner cannot make a donation, Kindly change the wallet address'
+        'The owner cannot make a donation, Kindly change the wallet address',
+        err
       )
     }
   }
